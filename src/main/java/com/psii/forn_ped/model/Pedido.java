@@ -23,11 +23,11 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
-    private List<Fornecedor> fornecedor;
+    private Fornecedor fornecedor;
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private List<Produto> produto;
+    private Produto produto;
 
     // Gets and Sets
     public Long getId() {
@@ -70,19 +70,19 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-    public List<Fornecedor> getFornecedor() {
+    public Fornecedor getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedor(List<Fornecedor> fornecedor) {
+    public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
 
-    public List<Produto> getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(List<Produto> produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 }

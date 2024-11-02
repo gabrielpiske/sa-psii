@@ -26,7 +26,7 @@ public class Produto {
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "produto")
     private List<PedidoProduto> produtos;
 
     // Gets and Sets
