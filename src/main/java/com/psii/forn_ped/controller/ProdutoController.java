@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.psii.forn_ped.model.Produto;
 import com.psii.forn_ped.service.FornecedorService;
 import com.psii.forn_ped.service.ProdutoService;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -52,7 +50,6 @@ public class ProdutoController {
 
     @PostMapping("/atualizar/{id}")
     public String atualizarPedido(@PathVariable("id") Long id, Produto produto) {
-        //TODO: process POST request
         produto.setId(id);
         produtoService.save(produto);
         return "redirect:/produtos";
@@ -61,7 +58,7 @@ public class ProdutoController {
     @GetMapping("/deletar/{id}")
     public String deletarProduto(@PathVariable("id") Long id) {
         produtoService.deleteById(id);
-        return "redirect:/rodutos";
+        return "redirect:/produtos";
     }
     
 }
