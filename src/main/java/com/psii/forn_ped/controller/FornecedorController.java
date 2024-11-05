@@ -1,14 +1,17 @@
 package com.psii.forn_ped.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.psii.forn_ped.model.Fornecedor;
 import com.psii.forn_ped.service.FornecedorService;
@@ -28,12 +31,6 @@ public class FornecedorController {
         return "fornecedor"; //lembra de criar o fornecedor.html
     }
 
-    @PostMapping
-    public String addFornecedores(Fornecedor fornecedor){
-        fornecedorService.save(fornecedor);
-        return "redirect:/fornecedores";
-    }
-
     @PostMapping("/salvar")
     public String salvarFornecedor(Fornecedor fornecedor) {
         fornecedorService.save(fornecedor);
@@ -41,12 +38,11 @@ public class FornecedorController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarFornecedor(@PathVariable("id") Long id, Model model) {
-        Fornecedor fornecedor = fornecedorService.findById(id).orElse(null);
-        model.addAttribute("fornecedor", fornecedor);
-        model.addAttribute("fornecedores", fornecedorService.findAll());
-        return "fornecedor";
-    }
+    @ResponseBody
+    public ResponseEntity<Fornecedor> editarFornecedor(@PathVariable("id") Long id) {
+        Optional<Fornecedor> fornecedorOpt = fornecedorService.findById(id);
+        return fornecedorOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }   
 
     @PostMapping("/atualizar/{id}")
     public String atualizarFornecedor(@PathVariable("id") Long id, Fornecedor fornecedor){
