@@ -34,6 +34,12 @@ public class FornecedorController {
         return "redirect:/fornecedores";
     }
 
+    @PostMapping("/salvar")
+    public String salvarFornecedor(Fornecedor fornecedor) {
+        fornecedorService.save(fornecedor);
+        return "redirect:/fornecedores";
+    }
+
     @GetMapping("/editar/{id}")
     public String editarFornecedor(@PathVariable("id") Long id, Model model) {
         Fornecedor fornecedor = fornecedorService.findById(id).orElse(null);
