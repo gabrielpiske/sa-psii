@@ -1,7 +1,6 @@
 package com.psii.forn_ped.model;
 
 import java.sql.Date;
-import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
