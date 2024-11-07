@@ -28,7 +28,8 @@ public class FornecedorController {
         List<Fornecedor> fornecedores = fornecedorService.findAll();
         model.addAttribute("fornecedores", fornecedores);
         model.addAttribute("fornecedor", new Fornecedor());
-        return "fornecedor"; //lembra de criar o fornecedor.html
+        model.addAttribute("abrirModal", false);
+        return "fornecedor";
     }
 
     @PostMapping("/salvar")
