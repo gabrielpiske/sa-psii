@@ -114,49 +114,45 @@
     </div>
     
     <!-- Modal de Edição de Produto -->
-    <div class="modal fade" id="editProdutoModal" tabindex="-1" aria-labelledby="editProdutoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form th:action="@{/produtos/editar}" method="post">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editProdutoModalLabel">Editar Produto</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="editProdutoModal" tabindex="-1" aria-labelledby="editProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/produtos/atualizar/{id}(id=${produto.id})}" method="post" id="editForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProdutoModalLabel">Editar Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editProdutoId" name="id">
+                    <div class="mb-3">
+                        <label for="editDescricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="editDescricao" name="descricao" required>
                     </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="editProdutoId" name="id">
-                        <div class="mb-3">
-                            <label for="editDescricao" class="form-label">Descrição</label>
-                            <input type="text" class="form-control" id="editDescricao" name="descricao" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editPreco" class="form-label">Preço</label>
-                            <input type="number" class="form-control" id="editPreco" name="preco" step="0.01" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCategoria" class="form-label">Categoria</label>
-                            <input type="text" class="form-control" id="editCategoria" name="categoria" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editDataValidade" class="form-label">Data de Validade</label>
-                            <input type="date" class="form-control" id="editDataValidade" name="dataValidade" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editFornecedor" class="form-label">Fornecedor</label>
-                            <select class="form-select" id="editFornecedor" name="fornecedor.id" required>
-                                <option value="" disabled selected>Selecione um fornecedor</option>
-                                <option th:each="fornecedor : ${fornecedores}" 
-                                        th:value="${fornecedor.id}" 
-                                        th:text="${fornecedor.empresa}">
-                                </option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label for="editPreco" class="form-label">Preço</label>
+                        <input type="number" class="form-control" id="editPreco" name="preco" step="0.01" required>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    <div class="mb-3">
+                        <label for="editCategoria" class="form-label">Categoria</label>
+                        <input type="text" class="form-control" id="editCategoria" name="categoria" required>
                     </div>
-                </form>
-            </div>
+                    <div class="mb-3">
+                        <label for="editDataValidade" class="form-label">Data de Validade</label>
+                        <input type="date" class="form-control" id="editDataValidade" name="dataValidade" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editFornecedor" class="form-label">Fornecedor</label>
+                        <select class="form-select" id="editFornecedor" name="fornecedor.id" required>
+                            <option value="" disabled selected>Selecione um fornecedor</option>
+                            <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.empresa}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -164,17 +160,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     function populateEditModal(id) {
-        fetch(`/produtos/${id}`)
+        fetch(`/produtos/editar/${id}`)
             .then(response => response.json())
-            .then(produto => {
-                document.getElementById('editProdutoId').value = produto.id;
-                document.getElementById('editDescricao').value = produto.descricao;
-                document.getElementById('editPreco').value = produto.preco;
-                document.getElementById('editCategoria').value = produto.categoria;
-                document.getElementById('editDataValidade').value = produto.dataValidade;
-                document.getElementById('editFornecedor').value = produto.fornecedor.id;
+            .then(data => {
+                document.getElementById("editForm").action = `/produtos/atualizar/${data.id}`;
+                
+                document.getElementById("editDescricao").value = data.descricao;
+                document.getElementById("editPreco").value = data.preco;
+                document.getElementById("editCategoria").value = data.categoria;
+                document.getElementById("editDataValidade").value = data.dataValidade;
+                document.getElementById("editFornecedor").value = data.fornecedor.id;
+                
+
+                new bootstrap.Modal(document.getElementById("editProdutoModal")).show();
             })
-            .catch(error => console.error('Erro ao buscar produto:', error));
+            .catch(error => console.error("Erro ao buscar produto:", error));
     }
 </script>
 </body>

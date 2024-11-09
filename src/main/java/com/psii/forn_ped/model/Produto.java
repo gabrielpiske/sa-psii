@@ -3,6 +3,8 @@ package com.psii.forn_ped.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,62 +29,28 @@ public class Produto {
     private Fornecedor fornecedor;
 
     @OneToMany(mappedBy = "produto")
-    private List<PedidoProduto> produtos;
+    @JsonIgnore //fazer o jackson parar de incomodar
+    private List<PedidoProduto> pedidoProdutos;
 
     // Gets and Sets
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public Double getPreco() { return preco; }
+    public void setPreco(Double preco) { this.preco = preco; }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 
-    public Double getPreco() {
-        return preco;
-    }
+    public Date getDataValidade() { return dataValidade; }
+    public void setDataValidade(Date dataValidade) { this.dataValidade = dataValidade; }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
+    public Fornecedor getFornecedor() { return fornecedor; }
+    public void setFornecedor(Fornecedor fornecedor) { this.fornecedor = fornecedor; }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public Date getDataValidade() {
-        return dataValidade;
-    }
-
-    public void setDataValidade(Date dataValidade) {
-        this.dataValidade = dataValidade;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public List<PedidoProduto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<PedidoProduto> produtos) {
-        this.produtos = produtos;
-    } 
+    public List<PedidoProduto> getPedidoProdutos() { return pedidoProdutos; }
+    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) { this.pedidoProdutos = pedidoProdutos; } 
 }
