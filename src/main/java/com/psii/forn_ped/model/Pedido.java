@@ -34,51 +34,21 @@ public class Pedido {
     private List<PedidoProduto> pedidoProdutos;
 
     // Gets and Sets
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Date getData() {return data;}
+    public void setData(Date data) {this.data = data;}
 
-    public Date getData() {
-        return data;
-    }
+    public String getStatus() {return status;}
+    public void setStatus(String status) {this.status = status;}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+    public Double getValorTotal() {return valorTotal;}
+    public void setValorTotal(Double valorTotal) {this.valorTotal = valorTotal;}
 
-    public String getStatus() {
-        return status;
-    }
+    public Fornecedor getFornecedor() {return fornecedor;}
+    public void setFornecedor(Fornecedor fornecedor) {this.fornecedor = fornecedor;}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
-
-    public List<PedidoProduto> getPedidoProdutos() {
-        return pedidoProdutos;
-    }
-
-    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {
-        this.pedidoProdutos = pedidoProdutos;
-    }
+    public List<PedidoProduto> getPedidoProdutos() {return pedidoProdutos;}
+    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {this.pedidoProdutos = pedidoProdutos;}
 }
