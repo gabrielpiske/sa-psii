@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psii.forn_ped.model.Pedido;
+import com.psii.forn_ped.model.PedidoProduto;
+import com.psii.forn_ped.repository.PedidoProdutoRepository;
 import com.psii.forn_ped.repository.PedidoRepository;
 
 @Service
 public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private PedidoProdutoRepository pedidoProdutoRepository;
 
     public List<Pedido> findAll() {
         return pedidoRepository.findAll();
@@ -24,6 +29,10 @@ public class PedidoService {
 
     public Pedido save(Pedido pedido) {
         return pedidoRepository.save(pedido);
+    }
+
+    public void savePedidoProduto(PedidoProduto pedidoProduto) {
+        pedidoProdutoRepository.save(pedidoProduto);
     }
 
     public void deleteById(Long id) {

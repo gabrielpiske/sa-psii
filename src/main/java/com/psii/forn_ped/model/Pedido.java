@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,6 @@ public class Pedido {
     private Long id;
 
     private Date data;
-    private Integer quantidade;
     private String status;
     private Double valorTotal;
 
@@ -28,29 +28,57 @@ public class Pedido {
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
 
-    @OneToMany(mappedBy = "pedido")
-    @JsonIgnore //fazer o jackson parar de incomodar
+    // @OneToMany(mappedBy = "pedido")
+    // @JsonIgnore //fazer o jackson parar de incomodar
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PedidoProduto> pedidoProdutos;
 
     // Gets and Sets
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public Date getData() { return data; }
-    public void setData(Date data) { this.data = data; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Integer getQuantidade() { return quantidade; }
-    public void setQuantidade(Integer quantidade) { this.quantidade = quantidade; }
+    public Date getData() {
+        return data;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setData(Date data) {
+        this.data = data;
+    }
 
-    public Double getValorTotal() { return valorTotal; }
-    public void setValorTotal(Double valorTotal) { this.valorTotal = valorTotal; }
+    public String getStatus() {
+        return status;
+    }
 
-    public Fornecedor getFornecedor() { return fornecedor; }
-    public void setFornecedor(Fornecedor fornecedor) { this.fornecedor = fornecedor; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public List<PedidoProduto> getPedidoProdutos() { return pedidoProdutos; }
-    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) { this.pedidoProdutos = pedidoProdutos; }
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public List<PedidoProduto> getPedidoProdutos() {
+        return pedidoProdutos;
+    }
+
+    public void setPedidoProdutos(List<PedidoProduto> pedidoProdutos) {
+        this.pedidoProdutos = pedidoProdutos;
+    }
 }
