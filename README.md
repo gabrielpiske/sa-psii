@@ -7,4 +7,4 @@ A situação proposta é estruturar um sistema Web para o gerenciamento dos 3 te
 fornecer vários produtos, e um pedido pode incluir produtos de diferentes fornecedores.
 
 ### Tecnologias utilizadas
-[![My Skills](https://skillicons.dev/icons?i=java,spring,hibernate,mysql,js,html,bootstrap)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=java,spring,hibernate,mysql,js,html,css,bootstrap)](https://skillicons.dev)
