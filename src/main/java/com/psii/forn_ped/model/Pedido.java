@@ -1,6 +1,7 @@
 package com.psii.forn_ped.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -29,7 +30,7 @@ public class Pedido {
     // @OneToMany(mappedBy = "pedido")
     // @JsonIgnore //fazer o jackson parar de incomodar
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PedidoProduto> pedidoProdutos;
+    private List<PedidoProduto> pedidoProdutos = new ArrayList<>();
 
     // Gets and Sets
     public Long getId() {return id;}

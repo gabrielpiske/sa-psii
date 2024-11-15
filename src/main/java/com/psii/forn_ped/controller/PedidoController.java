@@ -55,41 +55,33 @@ public class PedidoController {
             @RequestParam("quantidades") Integer[] quantidades,
             Model model) {
         // Verificar se pelo menos um produto foi selecionado
-        if (produtoIds == null || produtoIds.length == 0 || quantidades == null || quantidades.length == 0) {
-            model.addAttribute("error", "É necessário selecionar ao menos um produto.");
-            return "pedido";
+        if (produtoIds.length == 0) {
+            model.addAttribute("erro", "Você deve selecionar pelo menos um produto.");
+            return listPedidos(model);
         }
-
+        
+        // Salvar pedido
         pedidoService.save(pedido);
-
-        // Adicionar os produtos ao pedido
+        
+        // Salvar relacionamentos de PedidoProduto
+        pedido.getPedidoProdutos().clear();
         for (int i = 0; i < produtoIds.length; i++) {
-            Produto produto = produtoService.findById(produtoIds[i])
-                    .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-
+            Produto produto = produtoService.findById(produtoIds[i]).orElseThrow();
+            //PedidoProduto pedidoProduto = new PedidoProduto(pedido, produto, quantidades[i]);
             PedidoProduto pedidoProduto = new PedidoProduto();
             pedidoProduto.setPedido(pedido);
             pedidoProduto.setProduto(produto);
             pedidoProduto.setQuantidade(quantidades[i]);
-
-            pedidoProdutoService.save(pedidoProduto); // Salvar pedido_produto
+            pedidoProdutoService.save(pedidoProduto);
         }
-
+        
         return "redirect:/pedidos";
     }
 
     @GetMapping("/editar/{id}")
     @ResponseBody
-    public ResponseEntity<Pedido> editarPedido(@PathVariable("id") Long id) {
-        Optional<Pedido> pedidoOpt = pedidoService.findById(id);
-        return pedidoOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/atualizar/{id}")
-    public String atualizarPedido(@PathVariable("id") Long id, Pedido pedido) {
-        pedido.setId(id);
-        pedidoService.save(pedido);
-        return "redirect:/pedidos";
+    public Pedido editarPedido(@PathVariable("id") Long id) {
+        return pedidoService.findById(id).orElseThrow();
     }
 
     @GetMapping("/deletar/{id}")
