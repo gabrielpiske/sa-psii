@@ -62,17 +62,14 @@
                     <form th:action="@{/pedidos/salvar}" method="post" id="pedidoForm">
                         <div class="modal-body">
                             <input type="hidden" id="pedidoId" name="id">
-
                             <div class="mb-3">
                                 <label for="data" class="form-label">Data</label>
                                 <input type="date" class="form-control" id="data" name="data" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" class="form-control" id="status" name="status" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="fornecedor" class="form-label">Fornecedor</label>
                                 <select class="form-select" id="fornecedor" name="fornecedor.id" required>
@@ -80,13 +77,10 @@
                                     <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.empresa}"></option>
                                 </select>
                             </div>
-
-                            <!-- Campo para o valor total -->
                             <div class="mb-3">
                                 <label for="valorTotal" class="form-label">Valor Total</label>
                                 <input type="number" class="form-control" id="valorTotal" name="valorTotal" step="0.01" required>
                             </div>
-
                             <div class="mb-3">
                                 <label class="form-label">Produtos</label>
                                 <div th:each="produto : ${produtos}">
@@ -136,16 +130,8 @@
         }
 
         function abrirModalParaNovoPedido() {
+            document.getElementById('pedidoForm').reset();
             document.getElementById('pedidoId').value = '';
-            document.getElementById('data').value = '';
-            document.getElementById('status').value = '';
-            document.getElementById('fornecedor').value = '';
-            document.getElementById('valorTotal').value = '';
-            document.querySelectorAll("input[name='produtoIds']").forEach(input => {
-                input.checked = false;
-                document.getElementById('quantidade-' + input.value).value = '';
-            });
-            document.getElementById('pedidoModalLabel').textContent = 'Adicionar Pedido';
         }
     </script>
 </body>

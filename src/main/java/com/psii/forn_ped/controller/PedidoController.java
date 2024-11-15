@@ -54,9 +54,8 @@ public class PedidoController {
             @RequestParam("produtoIds") Long[] produtoIds,
             @RequestParam("quantidades") Integer[] quantidades,
             Model model) {
-
+        // Verificar se pelo menos um produto foi selecionado
         if (produtoIds == null || produtoIds.length == 0 || quantidades == null || quantidades.length == 0) {
-            // Verificar se pelo menos um produto foi selecionado
             model.addAttribute("error", "É necessário selecionar ao menos um produto.");
             return "pedido";
         }
