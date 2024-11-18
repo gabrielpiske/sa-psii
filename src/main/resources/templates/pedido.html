@@ -78,10 +78,10 @@
                                     <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.empresa}"></option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label for="valorTotal" class="form-label">Valor Total</label>
-                                <input type="number" class="form-control" id="valorTotal" name="valorTotal" step="0.01" required>
-                            </div>
+                            <!--<div class="mb-3">
+                                <label for="valorTotalDisplay" class="form-label">Valor Total</label>
+                                <input type="text" class="form-control" id="valorTotalDisplay" readonly>
+                            </div>-->
                             <div class="mb-3">
                                 <label class="form-label">Produtos</label>
                                 <div th:each="produto : ${produtos}">
@@ -91,6 +91,7 @@
                                         </div>
                                         <label class="form-control" th:text="${produto.descricao}"></label>
                                         <input type="number" class="form-control" name="quantidades" placeholder="Quantidade" min="1" id="quantidade-${produto.id}">
+                                        <input type="hidden" th:value="${produto.preco}" id="preco-${produto.id}">
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,8 @@
 package com.psii.forn_ped.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,28 +61,46 @@ public class PedidoController {
             model.addAttribute("erro", "Você deve selecionar pelo menos um produto.");
             return listPedidos(model);
         }
-        
+
         pedidoService.save(pedido);
-        
+
+        double valorTotal = 0;
+
         // Salvar relacionamentos de PedidoProduto
         pedido.getPedidoProdutos().clear();
         for (int i = 0; i < produtoIds.length; i++) {
             Produto produto = produtoService.findById(produtoIds[i]).orElseThrow();
-            //PedidoProduto pedidoProduto = new PedidoProduto(pedido, produto, quantidades[i]);
             PedidoProduto pedidoProduto = new PedidoProduto();
             pedidoProduto.setPedido(pedido);
             pedidoProduto.setProduto(produto);
             pedidoProduto.setQuantidade(quantidades[i]);
             pedidoProdutoService.save(pedidoProduto);
+
+            valorTotal += produto.getPreco() * quantidades[i];
         }
-        
+
+        pedido.setValorTotal(valorTotal);
+        pedidoService.save(pedido);
+
         return "redirect:/pedidos";
     }
 
     @GetMapping("/editar/{id}")
     @ResponseBody
-    public Pedido editarPedido(@PathVariable("id") Long id) {
-        return pedidoService.findById(id).orElseThrow();
+    public ResponseEntity<?> editarPedido(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoService.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", pedido.getId());
+        response.put("data", pedido.getData());
+        response.put("status", pedido.getStatus());
+        response.put("valorTotal", pedido.getValorTotal());
+        response.put("fornecedor", Map.of("id", pedido.getFornecedor().getId(), "empresa", pedido.getFornecedor().getEmpresa()));
+        response.put("pedidoProdutos", pedido.getPedidoProdutos().stream().map(pp -> Map.of(
+                "produtoId", pp.getProduto().getId(),
+                "quantidade", pp.getQuantidade())).toList());
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/deletar/{id}")
