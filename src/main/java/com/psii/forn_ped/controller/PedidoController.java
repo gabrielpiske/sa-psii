@@ -54,13 +54,12 @@ public class PedidoController {
             @RequestParam("produtoIds") Long[] produtoIds,
             @RequestParam("quantidades") Integer[] quantidades,
             Model model) {
-        // Verificar se pelo menos um produto foi selecionado
+        // Verifica se pelo menos um produto foi selecionado
         if (produtoIds.length == 0) {
             model.addAttribute("erro", "Você deve selecionar pelo menos um produto.");
             return listPedidos(model);
         }
         
-        // Salvar pedido
         pedidoService.save(pedido);
         
         // Salvar relacionamentos de PedidoProduto
