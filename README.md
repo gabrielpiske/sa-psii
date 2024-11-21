@@ -17,12 +17,12 @@ fornecer vários produtos, e um pedido pode incluir produtos de diferentes forne
 1. Passo 1: Faça o <a href="https://github.com/gabrielpiske/sa-psii/archive/refs/heads/main.zip">download</a>, o fork ou o clone do repositório.
 2. Passo 2:  No xampp inicie o seguinte servidor: `MySQL`.
 3. Em seu computador crie o banco de dados Mysql com o nome de `forndb`.
-4. Na pasta `resources` do projeto, no arquivo `application.properties`, certifique-se de colocar a senha do Mysql da sua máquina igual imagem abaixo.
+4. Na pasta `resources` do projeto, no arquivo `application.properties`, certifique-se de colocar o seu usuario e senha do Mysql da sua máquina igual imagem abaixo.
 ```java
 spring.application.name=forn_ped
 
 spring.datasource.url=jdbc:mysql://localhost:3306/forndb
-spring.datasource.username=root
+spring.datasource.username=seu usuario
 spring.datasource.password=sua senha
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
